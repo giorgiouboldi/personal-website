@@ -1,18 +1,48 @@
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    font-size: 18px;
-    height: 100vh;
-    letter-spacing: -0.5px;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  height: 100vh;
+  letter-spacing: -0.5px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0px;
+  padding: 0px;
+  height: 100vh;
+}
+
+.column {
+  padding: 0px 30px 0px 30px;
+  overflow-y: auto;
+  height: 100%;
+  border-right: 1px solid rgb(194, 194, 194);
+}
+
+/* Remove right border from the last column */
+.column:last-child {
+  border-right: none;
+}
+
+
+/* Media query for smaller screens */
+@media screen and (max-width: 600px) {
+  .container {
+    display: flex;
+    flex-wrap: wrap;
   }
 
-  .container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0px;
-    padding: 0px;
-    height: 100vh;
+  .column {
+    flex: 100%; /* Full width on small screens */
+    border-right: none; /* Remove right border on small screens */
+    height: auto;
   }
+}
+
+
+
 
   h1 {
     font-family: 'Times New Roman', Times, serif;
@@ -36,12 +66,7 @@ body {
     text-underline-offset:3px;
     }
   
-  .column {
-    padding: 0px 30px 0px 30px;
-    overflow-y: auto;
-    height: 100%;
-    border-right: 1px solid rgb(194, 194, 194);
-  }
+
   
   .data-item {
     padding: 0px;
@@ -84,5 +109,3 @@ body {
     height: auto; /* Maintain aspect ratio */
   }
 
-
-  
