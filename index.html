@@ -1,79 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Spreadsheet Data</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Giorgio Uboldi</title>
 </head>
 <body>
-    <h1>Google Spreadsheet Data</h1>
-
-    <table id="dataTable">
-        <thead>
-            <tr>
-                <th>Type</th>
-                <th>Year</th>
-                <th>Text</th>
-                <th>URL</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-
-    <script>
-        // Google Sheets API endpoint
-        const spreadsheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9ETlYmG0t-YyL3c_hkRjhKt-B7tuUK57UByl1ehcn4QW_inK_zm7lu89uBLZhTrd3mWKTBd0-tRxm/pub?gid=477744527&single=true&output=tsv";
-
-        // Function to fetch data from Google Sheets
-        async function fetchData() {
-            const response = await fetch(spreadsheetURL);
-            const data = await response.text();
-            const rows = data.split('\n');
-
-            // Remove header row
-            const header = rows.shift().split('\t');
-
-            // Display data in the table
-            const tableBody = document.querySelector('#dataTable tbody');
-            rows.forEach(row => {
-                const values = row.split('\t');
-                const tr = document.createElement('tr');
-                header.forEach((header, index) => {
-                    const td = document.createElement('td');
-                    td.textContent = values[index];
-                    tr.appendChild(td);
-                });
-                tableBody.appendChild(tr);
-            });
-        }
-
-        // Fetch data when the page loads
-        fetchData();
-    </script>
+  <div class="container">
+    <div class="column" id="column1"><h1>Giorgio Uboldi</h1></div>
+    <div class="column" id="column2"></p></div>
+    <div class="column" id="column3"><h1>Feed</h1><p>A stream of content, link and texts to keep track of things I like, I did or I want to repost.</p></div>
+  </div>
+  <script src="column1.js"></script>
+  <script src="column2.js"></script>
+  <script src="column3.js"></script>
 </body>
 </html>
