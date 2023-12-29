@@ -7,7 +7,7 @@ function fetchParagraphsAndLinks() {
 
   // First paragraph
   const paragraph1 = document.createElement('p');
-  paragraph1.innerHTML = 'Giorgio Uboldi (1987) is a designer, researcher and teacher.<br>He co-founded <a href="https://www.example-link.com" target="_blank">Calibro</a>, a design studio based in Milan focused on tailoring visual tools to explore and visualize data, complex information and archives.';
+  paragraph1.innerHTML = 'Giorgio Uboldi (1987) is a designer, researcher and teacher.<br>He co-founded <a href="https://www.calib.ro" target="_blank">Calibro</a>, a design studio based in Milan focused on tailoring visual tools to explore and visualize data, complex information and archives.';
   column1.appendChild(paragraph1);
 
    // Second paragraph
@@ -32,6 +32,15 @@ function fetchParagraphsAndLinks() {
   const websiteLink = document.createElement('a');
   websiteLink.href = 'https://www.are.na/giorgio-calibro';
   websiteLink.textContent = 'Arena';
+  column1.appendChild(websiteLink);
+
+  // Line break
+  column1.appendChild(lineBreak.cloneNode());
+
+  // Website link on a new line
+  const websiteLink2 = document.createElement('a');
+  websiteLink2.href = 'https://twitter.com/giorgiouboldi';
+  websiteLink2.textContent = 'Twitter';
   column1.appendChild(websiteLink);
   
 }
