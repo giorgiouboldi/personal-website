@@ -26,6 +26,10 @@ body {
   border-right: none;
 }
 
+.type-title{
+  margin-top: 64px;
+}
+
 
 /* Media query for smaller screens */
 @media screen and (max-width: 600px) {
@@ -93,7 +97,8 @@ body {
   }
 
   .arena-item h3 {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    word-break: break-word;
   }
   
   .arena-item p {

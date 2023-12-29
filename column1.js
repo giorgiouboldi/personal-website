@@ -33,14 +33,5 @@ function fetchParagraphsAndLinks() {
   websiteLink.href = 'https://www.are.na/giorgio-calibro';
   websiteLink.textContent = 'Arena';
   column1.appendChild(websiteLink);
-
-  // Line break
-  column1.appendChild(lineBreak.cloneNode());
-
-  // Website link on a new line
-  const websiteLink2 = document.createElement('a');
-  websiteLink2.href = 'https://twitter.com/giorgiouboldi';
-  websiteLink2.textContent = 'Twitter';
-  column1.appendChild(websiteLink);
   
 }
