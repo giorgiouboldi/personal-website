@@ -21,7 +21,7 @@ function fetchParagraphsAndLinks() {
 
   // Email link on a new line
   const emailLink = document.createElement('a');
-  emailLink.href = 'mailto:example@example.com';
+  emailLink.href = 'mailto:giorgio@calib.ro';
   emailLink.textContent = 'E-mail';
   column1.appendChild(emailLink);
 
@@ -30,7 +30,8 @@ function fetchParagraphsAndLinks() {
 
   // Website link on a new line
   const websiteLink = document.createElement('a');
-  websiteLink.href = 'https://www.example.com';
+  websiteLink.href = 'https://www.are.na/giorgio-calibro';
   websiteLink.textContent = 'Arena';
   column1.appendChild(websiteLink);
+  
 }
