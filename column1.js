@@ -33,5 +33,6 @@ function fetchParagraphsAndLinks() {
   websiteLink.href = 'https://www.are.na/giorgio-calibro';
   websiteLink.textContent = 'Arena';
   column1.appendChild(websiteLink);
+
   
 }
