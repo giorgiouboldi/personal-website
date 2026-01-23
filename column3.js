@@ -36,8 +36,6 @@ async function loadAndPaginateArenaBlocks() {
 
     // Add Load More button (only once)
     const column3 = document.getElementById('column3');
-
-    // Avoid duplicates if this function ever runs again
     if (!document.getElementById('loadMoreBtn')) {
       const loadMoreBtn = document.createElement('button');
       loadMoreBtn.id = 'loadMoreBtn';
@@ -68,42 +66,82 @@ function renderNextBatch() {
     const div = document.createElement('div');
     div.classList.add('arena-item');
 
+    // Date (like before)
     const date = document.createElement('h4');
     date.textContent = new Date(item.created_at).toLocaleDateString();
     div.appendChild(date);
 
-    const title = document.createElement('h3');
-    title.textContent = item.title || '';
-    div.appendChild(title);
+    const isImageBlock = !!(item.image && item.image.display && item.image.display.url);
+    const isTextBlock = item.class === 'Text' || (!isImageBlock && !!item.content);
 
-    // Image blocks
-    if (item.image && item.image.display && item.image.display.url) {
+    // --- IMAGE BLOCK: image -> title -> description (markdown)
+    if (isImageBlock) {
       const image = document.createElement('img');
       image.src = item.image.display.url;
       image.alt = item.title || '';
       div.appendChild(image);
+
+      if (item.title) {
+        const title = document.createElement('h3');
+        title.textContent = item.title;
+        div.appendChild(title);
+      }
+
+      if (item.description) {
+        const description = document.createElement('div');
+        description.classList.add('arena-description');
+        description.innerHTML = marked.parse(item.description);
+        div.appendChild(description);
+      }
     }
 
-    // Text content (Markdown)
-    if (item.content) {
-      const textContent = document.createElement('div');
-      textContent.classList.add('arena-text');
+    // --- TEXT BLOCK: title -> description (markdown) -> content (markdown)
+    else if (isTextBlock) {
+      if (item.title) {
+        const title = document.createElement('h3');
+        title.textContent = item.title;
+        div.appendChild(title);
+      }
 
-      // marked is available globally because you added the script tag
-      textContent.innerHTML = marked.parse(item.content);
+      if (item.description) {
+        const description = document.createElement('div');
+        description.classList.add('arena-description');
+        description.innerHTML = marked.parse(item.description);
+        div.appendChild(description);
+      }
 
-      div.appendChild(textContent);
+      if (item.content) {
+        const textContent = document.createElement('div');
+        textContent.classList.add('arena-text');
+        textContent.innerHTML = marked.parse(item.content);
+        div.appendChild(textContent);
+      }
     }
 
-    // Description (Markdown too)
-    if (item.description) {
-      const description = document.createElement('div');
-      description.classList.add('arena-description');
-      description.innerHTML = marked.parse(item.description);
-      div.appendChild(description);
+    // --- OTHER BLOCK TYPES (optional fallback)
+    else {
+      if (item.title) {
+        const title = document.createElement('h3');
+        title.textContent = item.title;
+        div.appendChild(title);
+      }
+
+      if (item.description) {
+        const description = document.createElement('div');
+        description.classList.add('arena-description');
+        description.innerHTML = marked.parse(item.description);
+        div.appendChild(description);
+      }
+
+      if (item.content) {
+        const textContent = document.createElement('div');
+        textContent.classList.add('arena-text');
+        textContent.innerHTML = marked.parse(item.content);
+        div.appendChild(textContent);
+      }
     }
 
-    // Source URL
+    // Source URL (keep if you want)
     if (item.source && item.source.url) {
       const sourceURL = document.createElement('a');
       sourceURL.href = item.source.url;
@@ -113,7 +151,7 @@ function renderNextBatch() {
       div.appendChild(sourceURL);
     }
 
-    // Insert items before the button (if button exists), otherwise append
+    // Insert before the button (if it exists), else append
     if (loadMoreBtn) {
       column3.insertBefore(div, loadMoreBtn);
     } else {
