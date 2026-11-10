@@ -144,6 +144,17 @@ h1 {
   letter-spacing: -0.4px;
 }
 
+/* Small "Last updated" line under the bio */
+.last-updated {
+  margin: -4px 0 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
 /* Each sentence on its own line */
 .bio-sentence {
   display: block;
@@ -340,7 +351,7 @@ h1 {
 }
 
 /* Elements that tilt (targets listed in explode.js) */
-#column1 > h1, .bio-sentence, #column1 > a,
+#column1 > h1, .bio-sentence, .last-updated, #column1 > a,
 #column2 > h1, #column2 > p, #column2 > .type-title, #column2 > .data-item,
 #column3 > h1, #column3 > p, #column3 > .arena-item, #loadMoreBtn {
   transition: transform 0.7s cubic-bezier(.3, 1.5, .5, 1);
@@ -351,7 +362,7 @@ h1 {
   display: inline-block;
 }
 
-.is-exploded :is(#column1 > h1, .bio-sentence, #column1 > a,
+.is-exploded :is(#column1 > h1, .bio-sentence, .last-updated, #column1 > a,
   #column2 > h1, #column2 > p, #column2 > .type-title, #column2 > .data-item,
   #column3 > h1, #column3 > p, #column3 > .arena-item, #loadMoreBtn) {
   transform: translateY(var(--shift, 0)) rotate(var(--tilt, 0deg));
@@ -367,7 +378,7 @@ h1 {
 }
 
 /* Falling apart: gravity-like ease-in instead of the springy bounce */
-.is-collapsing :is(#column1 > h1, .bio-sentence, #column1 > a,
+.is-collapsing :is(#column1 > h1, .bio-sentence, .last-updated, #column1 > a,
   #column2 > h1, #column2 > p, #column2 > .type-title, #column2 > .data-item,
   #column3 > h1, #column3 > p, #column3 > .arena-item, #loadMoreBtn) {
   transition: transform 1.2s cubic-bezier(.55, 0, .9, .4);

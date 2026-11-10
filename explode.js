@@ -5,7 +5,7 @@
 
 (function () {
   const TARGETS = [
-    '#column1 > h1', '.bio-sentence', '#column1 > a',
+    '#column1 > h1', '.bio-sentence', '.last-updated', '#column1 > a',
     '#column2 > h1', '#column2 > p', '#column2 > .type-title', '#column2 > .data-item',
     '#column3 > h1', '#column3 > p', '#column3 > .arena-item', '#loadMoreBtn'
   ].join(',');
