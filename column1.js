@@ -8,7 +8,7 @@ function fetchParagraphsAndLinks() {
   // First paragraph
   const paragraph1 = document.createElement('p');
   paragraph1.innerHTML = [
-    'Giorgio Uboldi (1987) is a designer, researcher and educator.',
+    'Giorgio Uboldi is a designer, researcher and educator.',
     'He co-founded <a href="https://www.calib.ro/" target="_blank">Calibro</a>, a design studio based in Milan focused on tailoring visual tools to explore and visualize data, complex information and archives.',
     'He teaches at Design Academy Eindhoven, at UNIRSM in San Marino and at Scuola Bauer in Milan.'
   ].map((sentence) => `<span class="bio-sentence">${sentence}</span>`).join(' ');
