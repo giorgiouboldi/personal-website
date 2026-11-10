@@ -1,115 +1,603 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  font-size: 18px;
-  height: 100vh;
-  letter-spacing: -0.5px;
+/* ---------- Fonts (self-hosted Geist, SIL OFL) ---------- */
+@font-face {
+  font-family: 'Geist';
+  src: url('fonts/Geist-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
 }
 
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('fonts/GeistMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* ---------- Tokens ---------- */
+:root {
+  --bg: #F1F1EE;
+  --bg-2: #E8E7E1; /* Experiences column, a shade deeper */
+  --surface: #F5F3EB;
+  --text: #333333;
+  --muted: #8A8A84;
+  --rule: rgba(128, 128, 128, 0.25);
+  --underline: #AAAAAA;
+
+  --sans: 'Geist', system-ui, sans-serif;
+  --mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+
+/* ---------- Base ---------- */
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 18px;
+  line-height: 1.4;
+  height: 100vh;
+  letter-spacing: -0.2px;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'ss03' 1, 'ss08' 1; /* tailed l, round dots */
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+/* Single weight across the site */
+h1, h2, h3, h4, h5, h6, b, strong, th, button {
+  font-weight: 400;
+}
+
+a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--underline);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  transition: text-decoration-color 0.2s ease;
+}
+
+a:hover {
+  text-decoration-color: var(--text);
+}
+
+/* Light outline icon before a link (E-mail, Arena) */
+.link-icon {
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: -0.1em;
+  color: var(--muted);
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.link-icon svg {
+  display: block;
+  width: 0.85em;
+  height: 0.85em;
+}
+
+a:hover .link-icon {
+  opacity: 1;
+}
+
+/* ---------- Layout ---------- */
 .container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0px;
-  padding: 0px;
   height: 100vh;
 }
 
 .column {
-  padding: 0px 30px 0px 30px;
+  padding: 0 30px 48px;
   overflow-y: auto;
   height: 100%;
-  border-right: 1px solid rgb(194, 194, 194);
+  box-sizing: border-box;
+  border-right: 1px solid var(--rule);
 }
 
-/* Remove right border from the last column */
 .column:last-child {
   border-right: none;
 }
 
-.type-title{
+/* ---------- Labels (mono, uppercase) ---------- */
+h1,
+.column-1,
+.source-link,
+#loadMoreBtn {
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 17px;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 48px 0 16px;
+  color: var(--text);
+}
+
+.type-title {
   margin-top: 64px;
 }
 
+/* ■ drawn in CSS so it sits centred on the capital letters;
+   colour is picked at random in column2.js */
+.type-title::before {
+  content: '';
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  background: var(--type-color, currentColor);
+  vertical-align: baseline;
+  position: relative;
+  top: -0.06em;
+  margin-right: 0.4em;
+}
 
-/* Media query for smaller screens */
+/* Bio: larger reading size, like an intro statement */
+#column1 p:first-of-type {
+  font-size: 24px;
+  line-height: 1.25;
+  letter-spacing: -0.4px;
+}
+
+/* Each sentence on its own line */
+.bio-sentence {
+  display: block;
+}
+
+/* ---------- Experiences ---------- */
+#column2 {
+  background: var(--bg-2);
+}
+
+.data-item {
+  margin-bottom: 20px;
+}
+
+.column-1 {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--muted);
+}
+
+.url-link {
+  cursor: pointer;
+}
+
+/* ---------- Feed (dark column) ---------- */
+#column3 {
+  --ink: #1F1F1F;
+  --on-dark: #CCCABD;
+  --rule-dark: rgba(245, 243, 235, 0.15);
+  background: var(--ink);
+  color: var(--on-dark);
+}
+
+#column3 > h1,
+#column3 > p,
+#column3 > p a {
+  color: var(--on-dark);
+}
+
+#column3 > p {
+  margin-bottom: 40px;
+}
+
+/* Cards: random background set in column3.js */
+.arena-item {
+  --card: #F5F3EB;
+  --fg: #1F1F1F;
+  background: var(--card);
+  color: var(--fg);
+  padding: 14px 14px 18px;
+  margin-bottom: 16px;
+}
+
+/* Light text on dark cards */
+.arena-item.is-dark {
+  --fg: #F5F3EB;
+}
+
+.arena-item a {
+  color: var(--fg);
+  text-decoration-color: color-mix(in srgb, var(--fg) 40%, transparent);
+}
+
+.arena-item a:hover {
+  text-decoration-color: var(--fg);
+}
+
+/* Meta row: date */
+.arena-meta {
+  margin-bottom: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.arena-date {
+  opacity: 0.7;
+}
+
+.arena-figure {
+  position: relative;
+}
+
+.arena-figure img,
+.arena-figure canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Dithered preview; the original shows on hover */
+.arena-figure canvas {
+  image-rendering: pixelated;
+}
+
+.arena-figure.is-dithered img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.arena-figure.is-dithered:hover img {
+  opacity: 1;
+}
+
+/* Title: sans, reading size */
+.arena-item h3 {
+  margin: 14px 0 8px;
+  font-size: 18px;
+  line-height: 1.3;
+  letter-spacing: -0.2px;
+  word-break: break-word;
+}
+
+/* Body: mono, smaller, softer */
+.arena-description,
+.arena-text {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+  letter-spacing: 0;
+  color: color-mix(in srgb, var(--fg) 80%, transparent);
+  word-break: break-word;
+}
+
+.arena-description p,
+.arena-text p {
+  margin: 0 0 10px;
+}
+
+.arena-description > :last-child,
+.arena-text > :last-child {
+  margin-bottom: 0;
+}
+
+.source-link {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 11px;
+}
+
+#loadMoreBtn {
+  margin: 24px 0;
+  padding: 10px 16px;
+  background: transparent;
+  color: var(--on-dark);
+  border: 1px solid var(--rule-dark);
+  border-radius: 0;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+#loadMoreBtn:hover {
+  border-color: var(--on-dark);
+}
+
+/* ---------- Explosion button (desktop) ---------- */
+.explode-btn {
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  z-index: 20;
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s ease, transform 0.6s cubic-bezier(.3, 1.6, .5, 1);
+}
+
+.explode-btn svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.explode-btn:hover {
+  opacity: 1;
+  color: var(--text);
+  transform: scale(1.12);
+}
+
+.is-exploded .explode-btn {
+  color: var(--text);
+  transform: rotate(calc(var(--level, 1) * 90deg)) scale(calc(1 + var(--level, 1) * 0.1));
+}
+
+/* Elements that tilt (targets listed in explode.js) */
+#column1 > h1, .bio-sentence, #column1 > a,
+#column2 > h1, #column2 > p, #column2 > .type-title, #column2 > .data-item,
+#column3 > h1, #column3 > p, #column3 > .arena-item, #loadMoreBtn {
+  transition: transform 0.7s cubic-bezier(.3, 1.5, .5, 1);
+  transition-delay: var(--delay, 0ms);
+}
+
+.is-exploded #column1 > a {
+  display: inline-block;
+}
+
+.is-exploded :is(#column1 > h1, .bio-sentence, #column1 > a,
+  #column2 > h1, #column2 > p, #column2 > .type-title, #column2 > .data-item,
+  #column3 > h1, #column3 > p, #column3 > .arena-item, #loadMoreBtn) {
+  transform: translateY(var(--shift, 0)) rotate(var(--tilt, 0deg));
+}
+
+/* Keep tilted or falling pieces from adding scrollbars */
+.is-exploded .column {
+  overflow-x: hidden;
+}
+
+.is-collapsing .column {
+  overflow: hidden;
+}
+
+/* Falling apart: gravity-like ease-in instead of the springy bounce */
+.is-collapsing :is(#column1 > h1, .bio-sentence, #column1 > a,
+  #column2 > h1, #column2 > p, #column2 > .type-title, #column2 > .data-item,
+  #column3 > h1, #column3 > p, #column3 > .arena-item, #loadMoreBtn) {
+  transition: transform 1.2s cubic-bezier(.55, 0, .9, .4);
+  transition-delay: var(--delay, 0ms);
+}
+
+/* ---------- Small screens ---------- */
+.section-toggle {
+  display: none;
+}
+
 @media screen and (max-width: 600px) {
+  .explode-btn {
+    display: none;
+  }
+
   .container {
-    display: flex;
-    flex-wrap: wrap;
+    display: block;
+    height: auto;
   }
 
   .column {
-    flex: 100%; /* Full width on small screens */
-    border-right: none; /* Remove right border on small screens */
     height: auto;
-  }
-}
-
-
-
-
-  h1 {
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: 200;
-    letter-spacing: -1px;
-    font-size: 40px;
+    overflow: visible;
+    padding: 0 16px 32px;
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
   }
 
-  .column-1{
-    margin-right: 10px;
-    margin-bottom: 8px;
-    width: 200px;
-    font-size: 12px;
-    display: block;
-}
-
-  #column1 a, #column2 a, #column3 a{
-    color: #000;
-    text-decoration: underline;
-    text-decoration-color:#7a94e1;
-    text-underline-offset:3px;
-    }
-  
-
-  
-  .data-item {
-    padding: 0px;
-    margin-bottom: 24px;
+  #column1 {
+    border-bottom: none;
   }
-  
-  .url-link {
-    color: rgb(0, 0, 0);
-    text-decoration: underline;
+
+  /* --- Collapsible bands for Experiences and Feed --- */
+  .column.is-collapsible {
+    padding-top: 0;
+  }
+
+  .column.is-collapsed {
+    padding-bottom: 0;
+  }
+
+  .column.is-collapsible > h1.headers,
+  .column.is-collapsed > :not(.section-toggle) {
+    display: none;
+  }
+
+  .section-toggle {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: calc(100% + 32px);
+    margin: 0 -16px;
+    padding: 26px 16px;
+    background: var(--bg);
+    color: var(--text);
+    border: 0;
+    text-align: left;
     cursor: pointer;
-  }
-  
-  .arena-item {
-    border-bottom: 1px solid #d7d7d7;
-    padding: 24px 0px;
-    margin-bottom: 24px;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-  }
-  
-  .arena-item h4 {
-    margin-bottom: 5px;
-    font-size: 12px;
-    font-weight: 400;
+    -webkit-tap-highlight-color: transparent;
+    transition: padding 0.35s ease;
   }
 
-  .arena-item h3 {
+  .is-open > .section-toggle {
+    padding: 16px;
     margin-bottom: 8px;
-    word-break: break-word;
   }
-  
-  .arena-item p {
-    margin-bottom: 16px;
+
+  /* --- Closed bands dock to the bottom of the screen --- */
+  :root {
+    --band-h: 56px;
+    --safe: env(safe-area-inset-bottom, 0px);
   }
-  
-  .arena-item a {
-    color: #000;
+
+  body[data-open="none"] {
+    padding-bottom: calc(var(--band-h) * 2 + var(--safe));
   }
-  
-  .arena-item img {
-    max-width: 100%; /* Set maximum width to 100% of the container */
-    height: auto; /* Maintain aspect ratio */
+
+  body[data-open="experiences"],
+  body[data-open="feed"] {
+    padding-bottom: calc(var(--band-h) + var(--safe));
   }
+
+  .column.is-collapsed {
+    padding: 0;
+    border-bottom: 0;
+  }
+
+  .column.is-collapsed > .section-toggle {
+    position: fixed;
+    z-index: 10;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    margin: 0;
+    height: calc(var(--band-h) + var(--safe));
+    padding: 0 16px var(--safe);
+    box-sizing: border-box;
+    border-top: 1px solid var(--rule);
+    animation: dock-in 0.5s cubic-bezier(.2, .8, .2, 1) both;
+  }
+
+  /* Both closed: Experiences sits on top of Feed */
+  body[data-open="none"] #column2.is-collapsed > .section-toggle {
+    bottom: calc(var(--band-h) + var(--safe));
+    height: var(--band-h);
+    padding-bottom: 0;
+    box-shadow: 0 -12px 24px rgba(31, 31, 31, 0.06);
+  }
+
+  body[data-open="none"] #column3.is-collapsed > .section-toggle {
+    animation-delay: 60ms;
+  }
+
+  @keyframes dock-in {
+    from { transform: translateY(100%); }
+    to   { transform: none; }
+  }
+
+  #column2 .section-toggle {
+    background: var(--bg-2);
+  }
+
+  #column3 .section-toggle {
+    background: #1F1F1F;
+    color: #CCCABD;
+  }
+
+  .toggle-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
+  }
+
+  .toggle-meta {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.9px;
+    color: var(--muted);
+  }
+
+  /* Colour strip on the Feed band: one chip per card */
+  .toggle-meta i {
+    display: block;
+    width: 8px;
+    height: 8px;
+  }
+
+  .is-poked .toggle-meta i {
+    animation: chip-jump 0.5s cubic-bezier(.3, 1.6, .5, 1) both;
+    animation-delay: calc(var(--k) * 35ms);
+  }
+
+  @keyframes chip-jump {
+    0%   { transform: translateY(0); }
+    40%  { transform: translateY(-9px) rotate(20deg); }
+    100% { transform: translateY(0); }
+  }
+
+  /* Plus that turns into a cross */
+  .toggle-icon {
+    position: relative;
+    width: 14px;
+    height: 14px;
+    transition: transform 0.45s cubic-bezier(.3, 1.5, .5, 1);
+  }
+
+  .toggle-icon::before,
+  .toggle-icon::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6.5px;
+    width: 14px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .toggle-icon::after {
+    transform: rotate(90deg);
+  }
+
+  .is-open .toggle-icon {
+    transform: rotate(135deg);
+  }
+
+  /* Content is dealt in, one item after another */
+  .is-open > :not(.section-toggle) {
+    animation: rise 0.5s cubic-bezier(.2, .8, .2, 1) both;
+    animation-delay: calc(var(--i, 0) * 45ms);
+  }
+
+  #column3.is-open > .arena-item {
+    animation-name: deal;
+    animation-duration: 0.6s;
+    animation-delay: calc(var(--i, 0) * 70ms);
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  @keyframes deal {
+    from { opacity: 0; transform: translateY(40px) rotate(var(--rot, 2deg)) scale(0.96); }
+    60%  { opacity: 1; }
+    to   { opacity: 1; transform: none; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .explode-btn,
+  .bio-sentence,
+  .data-item,
+  .arena-item,
+  .section-toggle,
+  .toggle-icon,
+  .toggle-meta i,
+  .is-open > * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -1,5 +1,16 @@
 document.addEventListener('DOMContentLoaded', fetchData);
 
+// Random square colour for each section title, from the feed palette
+// (CARD_COLORS / luminance live in column3.js). Very pale colours are
+// left out so the square stays visible on the light background.
+let lastTypeColor = null;
+
+function randomTypeColor() {
+  const pool = CARD_COLORS.filter((c) => luminance(c) < 0.45 && c !== lastTypeColor);
+  lastTypeColor = pool[Math.floor(Math.random() * pool.length)];
+  return lastTypeColor;
+}
+
 async function fetchData() {
   try {
     const response = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9ETlYmG0t-YyL3c_hkRjhKt-B7tuUK57UByl1ehcn4QW_inK_zm7lu89uBLZhTrd3mWKTBd0-tRxm/pub?gid=477744527&single=true&output=tsv');
@@ -24,6 +35,7 @@ async function fetchData() {
         // Add a new div with the Type as the title
         const titleDiv = document.createElement('h1');
         titleDiv.classList.add('type-title');
+        titleDiv.style.setProperty('--type-color', randomTypeColor());
         titleDiv.textContent = currentType;
         container.appendChild(titleDiv);
       }
